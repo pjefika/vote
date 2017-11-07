@@ -62,16 +62,17 @@ public class VotadoServico {
     public Votado listarVotoEspecifico(UsuarioEfika usuarioEfika, Dados dados, Celula celula) {
 
         try {
-
-            Query query = this.entityManager.createQuery("FROM Votado v WHERE v.usuarioEfika =:param1 AND v.dados.celula =:param2");
+            Query query = this.entityManager.createQuery("FROM Votado v WHERE 1=1 "
+                    + "AND v.usuarioEfika =:param1 "
+                    + "AND v.dados.celula =:param2 "
+                    + "AND v.dados.evento =:param3 ");
             query.setParameter("param1", usuarioEfika);
             query.setParameter("param2", celula);
+            query.setParameter("param3", dados.getEvento());
             return (Votado) query.getSingleResult();
-
         } catch (Exception e) {
-
+            e.printStackTrace();
             return new Votado();
-
         }
 
     }
